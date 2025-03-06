@@ -240,19 +240,19 @@ button:hover {
             const apiUrl = `https://tetabox-api-dl.vercel.app/?url=${encodeURIComponent(videoUrl)}`;
 
             fetch(apiUrl)
-                .then(() => {
-                    loadingSpinner.style.display = "none"; // লোডিং বন্ধ
-                    successMessage.style.display = "block";
-                    successMessage.style.color = "green";
-                    successMessage.innerHTML = `✅ Video successfully sent to Telegram! 🎬`;
-                })
-                .catch(() => {
-                    loadingSpinner.style.display = "none";
-                    successMessage.style.display = "block";
-                    successMessage.style.color = "green";
-                    successMessage.innerHTML = "✅ Video successfully sent to Telegram! 🎬!";
-                });
-        });
+		    .then(() => {
+			    loadingSpinner.style.display = "none"; // লোডিং বন্ধ
+                            successMessage.style.display = "block";
+                            successMessage.style.color = "green";
+                            successMessage.innerHTML = `<i class='fa fa-telegram' aria-hidden='true'></i> Video successfully sent to Telegram!`;
+		    })
+		    .catch(() => {
+			    loadingSpinner.style.display = "none";
+                            successMessage.style.display = "block";
+                            successMessage.style.color = "green";
+                            successMessage.innerHTML = `<i class='fa fa-telegram' aria-hidden='true'></i> Video successfully sent to Telegram!`;
+		    });
+	});
 
         // Clear বাটনের ফাংশন
         document.getElementById("clearButton").addEventListener("click", function() {
