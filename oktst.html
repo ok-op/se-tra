@@ -4,56 +4,46 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Terabox Video Sender</title>
-    <style>
-        body { text-align: center; font-family: Arial, sans-serif; }
-        .container { width: 90%; max-width: 400px; margin: auto; padding: 20px; }
-        input { width: 80%; padding: 10px; margin: 10px 0; }
-        button { padding: 10px 15px; font-size: 16px; cursor: pointer; }
-        .success { color: green; font-weight: bold; margin-top: 15px; }
-        .error { color: red; font-weight: bold; margin-top: 15px; }
-    </style>
 </head>
-<body>
+<body style="text-align: center; font-family: Arial, sans-serif;">
 
     <h2>🎬 Terabox Video Sender</h2>
-    <div class="container">
-        <input type="text" id="videoUrl" placeholder="Enter Terabox URL..." required>
+    <form id="videoForm">
+        <input type="text" id="videoUrl" name="url" placeholder="Enter Terabox URL..." style="width: 80%; padding: 10px;" required>
         <br><br>
-        <button onclick="sendVideo()">📤 Send Video</button>
-        <p id="responseMessage"></p>
-    </div>
+        <button type="submit" style="padding: 10px 15px; font-size: 16px; cursor: pointer;">📤 Send Video</button>
+    </form>
+    <p id="responseMessage"></p>
 
     <script>
-        async function sendVideo() {
+        document.getElementById("videoForm").addEventListener("submit", function(event) {
+            event.preventDefault(); // পেজ রিফ্রেশ বন্ধ করবে
+
             const url = document.getElementById("videoUrl").value;
             const responseMessage = document.getElementById("responseMessage");
 
             if (!url) {
                 responseMessage.innerHTML = "❌ Please enter a valid URL!";
-                responseMessage.className = "error";
+                responseMessage.style.color = "red";
                 return;
             }
 
             responseMessage.innerHTML = "⏳ Sending video...";
-            responseMessage.className = "";
+            responseMessage.style.color = "black";
 
-            try {
-                const apiUrl = `https://tetabox-api-dl.vercel.app/?url=${encodeURIComponent(url)}`;
-                const response = await fetch(apiUrl);
-                const data = await response.json();
+            const apiUrl = `https://tetabox-api-dl.vercel.app/?url=${encodeURIComponent(url)}`;
 
-                if (response.ok && data.message) {
+            fetch(apiUrl)
+                .then(response => response.json())
+                .then(data => {
                     responseMessage.innerHTML = `✅ ${data.message}`;
-                    responseMessage.className = "success";
-                } else {
-                    responseMessage.innerHTML = `❌ Error: ${data.message || "Unknown error"}`;
-                    responseMessage.className = "error";
-                }
-            } catch (error) {
-                responseMessage.innerHTML = `❌ Failed to send video!`;
-                responseMessage.className = "error";
-            }
-        }
+                    responseMessage.style.color = "green";
+                })
+                .catch(error => {
+                    responseMessage.innerHTML = "❌ Failed to send video!";
+                    responseMessage.style.color = "red";
+                });
+        });
     </script>
 
 </body>
