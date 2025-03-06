@@ -4,54 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Terabox Video Sender</title>
-    <style>
-        body { font-family: Arial, sans-serif; text-align: center; padding: 20px; background: #f4f4f4; }
-        .container { background: white; padding: 20px; border-radius: 10px; box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2); max-width: 400px; margin: auto; }
-        input { width: 90%; padding: 10px; margin: 10px 0; border: 1px solid #ddd; border-radius: 5px; text-align: center; }
-        button { padding: 10px 15px; border: none; background: #28a745; color: white; font-size: 16px; cursor: pointer; border-radius: 5px; }
-        button:hover { background: #218838; }
-        .status { font-weight: bold; margin-top: 10px; }
-    </style>
 </head>
-<body>
+<body style="text-align: center; font-family: Arial, sans-serif;">
 
-    <div class="container">
-        <h2>🎬 Terabox Video Sender</h2>
-        <input type="text" id="teraboxUrl" value="https://teraboxapp.com/s/1G24ENpVXtfczMUq03F0xgg">
-        <button onclick="sendVideo()">📤 Send Video</button>
-        <p id="status" class="status"></p>
-    </div>
-
-    <script>
-    async function sendVideo() {
-        const url = document.getElementById("teraboxUrl").value;
-        const statusText = document.getElementById("status");
-        statusText.innerText = "⏳ Sending video...";
-
-        try {
-            const apiUrl = `https://tetabox-api-dl.vercel.app/?url=${encodeURIComponent(url)}`;
-            const response = await fetch(apiUrl);
-            const data = await response.json();
-
-            if (data.download_link) {
-                await fetch(`https://api.telegram.org/bot6767161921:AAHWrhCPc599gSwVxfncO9l8gtmTYymMhNw/sendVideo`, {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({
-                        chat_id: "-1002335466442",
-                        video: data.download_link,
-                        caption: "Here is your Terabox video! 🎬"
-                    })
-                });
-                statusText.innerText = "✅ Video sent successfully!";
-            } else {
-                statusText.innerText = "❌ Error sending video!";
-            }
-        } catch (error) {
-            statusText.innerText = "❌ Failed! " + error.message;
-        }
-    }
-    </script>
+    <h2>🎬 Terabox Video Sender</h2>
+    <form action="https://tetabox-api-dl.vercel.app/" method="GET">
+        <input type="text" name="url" placeholder="Enter Terabox URL..." style="width: 80%; padding: 10px;" required>
+        <br><br>
+        <button type="submit" style="padding: 10px 15px; font-size: 16px; cursor: pointer;">📤 Send Video</button>
+    </form>
 
 </body>
 </html>
