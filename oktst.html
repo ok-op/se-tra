@@ -46,30 +46,19 @@
 		    }
 
 		    .title {
-    font-size: 24px;
-    font-weight: bold;
-    position: relative;
-    width: 100%;
-    text-align: center;
-    white-space: nowrap;
-    overflow: hidden;
-    display: flex;
-    justify-content: center;
+    font-size: 10px; /* ফন্ট সাইজ */
+    font-weight: bold; /* টেক্সট মোটা করা */
+    margin-top: 5px;
+    animation: footer__copyrightAnimation 2s linear infinite;
 }
 
-.title span {
-    display: inline-block;
-    animation: titleMove 5s linear infinite;
+@keyframes title {
+    0% { color: red; }
+    25% { color: blue; }
+    50% { color: green; }
+    75% { color: orange; }
+    100% { color: red; }
 }
-
-@keyframes titleMove {
-    0% { transform: translateX(100%); }  /* একদম ডান পাশে শুরু */
-    100% { transform: translateX(-100%); } /* একদম বাম পাশে শেষ */
-	    }
-
-	    
-
-        
 
         /* ইনপুট ও বাটন */
         input {
@@ -91,7 +80,7 @@
             border: none;
             padding: 10px 15px;
             font-size: 14px;
-            cursor: pointer;
+            cursor: pinter;
             border-radius: 5px;
             transition: 0.3s;
             margin: 5px;
@@ -170,7 +159,7 @@
 <body>
 
     <!-- টাইটেল -->
-    <div class="title"><span>🎬 Terabox Video Sender</span></div>
+    <div class="title">🎬 Terabox Video Sender</div>
 
     <div class="card">
     <!-- লোগো যোগ করা -->
