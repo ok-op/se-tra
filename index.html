@@ -11,7 +11,6 @@
             background-color: #f4f4f4;
             padding: 20px;
         }
-
         h1 {
             color: #333;
             font-size: 26px;
@@ -19,8 +18,7 @@
             margin-bottom: 15px;
             text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
         }
-
-        .profile-card {
+        .container {
             background: white;
             width: 90%;
             max-width: 400px;
@@ -30,15 +28,6 @@
             margin: 20px auto;
             text-align: center;
         }
-
-        .profile-card img {
-            width: 80px;
-            height: 80px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 3px solid #28a745;
-        }
-
         input {
             width: 85%;
             padding: 10px;
@@ -46,7 +35,6 @@
             border: 1px solid #ddd;
             border-radius: 5px;
         }
-
         button {
             padding: 12px 20px;
             border: none;
@@ -56,105 +44,58 @@
             cursor: pointer;
             border-radius: 5px;
         }
-
         button:hover {
             background-color: #218838;
         }
-
-        .progress-bar-container {
-            width: 100%;
-            background: #ddd;
-            border-radius: 5px;
-            overflow: hidden;
-            margin-top: 15px;
-            display: none;
-        }
-
-        .progress-bar {
-            width: 0%;
-            height: 10px;
-            background: #28a745;
-            transition: width 0.5s ease-in-out;
-        }
-
-        .error {
-            color: red;
+        .status {
             font-weight: bold;
             margin-top: 10px;
         }
-
-        .success {
-            color: green;
-            font-weight: bold;
-            margin-top: 10px;
-        }
+        .success { color: green; }
+        .error { color: red; }
     </style>
 </head>
 <body>
 
     <h1>🎬 Terabox Video Sender</h1>
-
-    <div class="profile-card">
-        <img src="https://graph.org/file/4e8a1172e8ba4b7a0bdfa.jpg" alt="Profile">
+    <div class="container">
         <p>Paste the Terabox link below and click "Send to Telegram"</p>
-
         <input type="text" id="teraboxUrl" placeholder="Enter Terabox URL here...">
         <br>
         <button onclick="sendVideo()">📤 Send to Telegram</button>
-
-        <div class="progress-bar-container" id="progressContainer">
-            <div class="progress-bar" id="progressBar"></div>
-        </div>
-
-        <p id="status"></p>
+        <p id="status" class="status"></p>
     </div>
 
     <script>
     async function sendVideo() {
         const url = document.getElementById("teraboxUrl").value;
         const statusText = document.getElementById("status");
-        const progressBarContainer = document.getElementById("progressContainer");
-        const progressBar = document.getElementById("progressBar");
 
         if (!url) {
-            statusText.className = "error";
+            statusText.className = "status error";
             statusText.innerText = "❌ Please enter a valid Terabox URL!";
             return;
         }
 
-        statusText.innerText = "";
-        progressBarContainer.style.display = "block";
-        progressBar.style.width = "10%";  
+        statusText.className = "status";
+        statusText.innerText = "⏳ Sending video to Telegram...";
 
         try {
-            progressBar.style.width = "40%";  
-
-            const proxyUrl = "https://proxy-wd.wd-zone.workers.dev";
-            const teraboxApi = "https://tetabox-api-dl.vercel.app";
-            
-            // Cloudflare Workers Proxy ব্যবহার করে API কল করা
-            const response = await fetch(`${proxyUrl}/?url=${encodeURIComponent(teraboxApi + "?url=" + url)}`);
+            const apiUrl = `https://tetabox-api-dl.vercel.app/?url=${encodeURIComponent(url)}`;
+            const response = await fetch(apiUrl);
             const data = await response.json();
 
-            progressBar.style.width = "80%";  
-
             if (response.ok) {
-                progressBar.style.width = "100%";  
-                statusText.className = "success";
-                statusText.innerText = `✅ ${data.message || "Video sent successfully to Telegram!"}`;
+                statusText.className = "status success";
+                statusText.innerText = `✅ Video sent successfully to Telegram!`;
             } else {
-                statusText.className = "error";
+                statusText.className = "status error";
                 statusText.innerText = `❌ Error: ${data.detail || "Unknown error"}`;
             }
         } catch (error) {
-            statusText.className = "error";
+            statusText.className = "status error";
             statusText.innerText = `❌ Failed to send video! ${error.message}`;
         }
-
-        setTimeout(() => {
-            progressBarContainer.style.display = "none";
-            progressBar.style.width = "0%";
-        }, 2000);
     }
     </script>
 
