@@ -36,6 +36,11 @@
     justify-content: center;
     margin-top: 30px; /* উপরের দিকে সরানোর জন্য */
 }
+	    .card-logo {
+    width: 80px; /* লোগোর আকার */
+    height: auto;
+    margin-bottom: 10px; /* টেক্সটের সাথে কিছু গ্যাপ */
+	    }
 
         /* টাইটেল */
         .title {
@@ -150,20 +155,23 @@
     <div class="title">🎬 Terabox Video Sender</div>
 
     <div class="card">
-        <form id="videoForm">
-            <p>Terbox লিংক এখানে এড করুন</p>
-            <input type="text" id="videoUrl" placeholder="Enter Terabox URL..." required>
-            <br>
-            <div class="btn-group">
-                <button type="submit">📤 Send Video</button>
-                <button type="button" class="clear-btn" id="clearButton">🧹 Clear</button>
-            </div>
-        </form>
-
-        <!-- লোডিং স্পিনার -->
-        <div class="loader" id="loadingSpinner"></div>
-
-        <p id="successMessage" style="display: none; font-weight: bold;"></p>
+    <!-- লোগো যোগ করা -->
+    <img src="https://graph.org/file/4e8a1172e8ba4b7a0bdfa.jpg" alt="Logo" class="card-logo">
+    
+    <form id="videoForm">
+        <p>Terabox লিংক এখানে এড করুন</p>
+        <input type="text" id="videoUrl" placeholder="Enter Terabox URL..." required>
+        <br>
+        <div class="btn-group">
+            <button type="submit">📤 Send Video</button>
+            <button type="button" class="clear-btn" id="clearButton">🧹 Clear</button>
+        </div>
+    </form>
+    
+    <!-- লোডিং স্পিনার -->
+    <div class="loader" id="loadingSpinner"></div>
+    
+    <p id="successMessage" style="display: none; font-weight: bold;"></p>
     </div>
 
     <div class="main-content">
