@@ -5,57 +5,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Terabox Video Sender</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            text-align: center;
-            background-color: #f4f4f4;
-            padding: 20px;
-        }
-        .container {
-            background: white;
-            width: 90%;
-            max-width: 400px;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.3);
-            margin: 20px auto;
-            text-align: center;
-        }
-        input {
-            width: 85%;
-            padding: 10px;
-            margin: 10px 0;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-        }
-        button {
-            padding: 12px 20px;
-            border: none;
-            background-color: #28a745;
-            color: white;
-            font-size: 16px;
-            cursor: pointer;
-            border-radius: 5px;
-        }
-        button:hover {
-            background-color: #218838;
-        }
-        .status {
-            font-weight: bold;
-            margin-top: 10px;
-        }
-        .success { color: green; }
-        .error { color: red; }
+        body { font-family: Arial, sans-serif; text-align: center; padding: 20px; background: #f4f4f4; }
+        .container { background: white; padding: 20px; border-radius: 10px; box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2); max-width: 400px; margin: auto; }
+        input { width: 90%; padding: 10px; margin: 10px 0; border: 1px solid #ddd; border-radius: 5px; text-align: center; }
+        button { padding: 10px 15px; border: none; background: #28a745; color: white; font-size: 16px; cursor: pointer; border-radius: 5px; }
+        button:hover { background: #218838; }
+        .status { font-weight: bold; margin-top: 10px; }
     </style>
 </head>
 <body>
 
-    <h1>🎬 Terabox Video Sender</h1>
     <div class="container">
-        <p>Paste the Terabox link below and click "Send to Telegram"</p>
-        <input type="text" id="teraboxUrl" placeholder="Enter Terabox URL here...">
-        <br>
-        <button onclick="sendVideo()">📤 Send to Telegram</button>
+        <h2>🎬 Terabox Video Sender</h2>
+        <input type="text" id="teraboxUrl" value="https://teraboxapp.com/s/1G24ENpVXtfczMUq03F0xgg">
+        <button onclick="sendVideo()">📤 Send Video</button>
         <p id="status" class="status"></p>
     </div>
 
@@ -63,26 +26,14 @@
     async function sendVideo() {
         const url = document.getElementById("teraboxUrl").value;
         const statusText = document.getElementById("status");
-
-        if (!url) {
-            statusText.className = "status error";
-            statusText.innerText = "❌ Please enter a valid Terabox URL!";
-            return;
-        }
-
-        statusText.className = "status";
-        statusText.innerText = "⏳ Sending video to Telegram...";
+        statusText.innerText = "⏳ Sending video...";
 
         try {
             const apiUrl = `https://tetabox-api-dl.vercel.app/?url=${encodeURIComponent(url)}`;
             const response = await fetch(apiUrl);
             const data = await response.json();
 
-            if (response.ok && data.download_link) {
-                statusText.className = "status success";
-                statusText.innerHTML = `✅ <a href="${data.download_link}" target="_blank">Click here to watch video</a>`;
-
-                // Telegram bot API call (you need to replace <YOUR_BOT_TOKEN> & <CHAT_ID>)
+            if (data.download_link) {
                 await fetch(`https://api.telegram.org/bot6767161921:AAHWrhCPc599gSwVxfncO9l8gtmTYymMhNw/sendVideo`, {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
@@ -92,17 +43,15 @@
                         caption: "Here is your Terabox video! 🎬"
                     })
                 });
-
+                statusText.innerText = "✅ Video sent successfully!";
             } else {
-                statusText.className = "status error";
-                statusText.innerText = `❌ Error: ${data.detail || "Unknown error"}`;
+                statusText.innerText = "❌ Error sending video!";
             }
         } catch (error) {
-            statusText.className = "status error";
-            statusText.innerText = `❌ Failed to send video! ${error.message}`;
+            statusText.innerText = "❌ Failed! " + error.message;
         }
     }
     </script>
 
 </body>
-  </html>
+</html>
