@@ -11,18 +11,41 @@
             background-color: #f4f4f4;
             padding: 20px;
         }
+
+        .profile-card {
+            background: white;
+            width: 90%;
+            max-width: 400px;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+            margin: 20px auto;
+            text-align: center;
+        }
+
+        .profile-card img {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid #28a745;
+        }
+
         h2 {
             color: #333;
+            margin-bottom: 10px;
         }
+
         input {
-            width: 80%;
+            width: 85%;
             padding: 10px;
             margin: 10px 0;
             border: 1px solid #ddd;
             border-radius: 5px;
         }
+
         button {
-            padding: 10px 20px;
+            padding: 12px 20px;
             border: none;
             background-color: #28a745;
             color: white;
@@ -30,55 +53,77 @@
             cursor: pointer;
             border-radius: 5px;
         }
+
         button:hover {
             background-color: #218838;
         }
-        #status {
-            margin-top: 20px;
+
+        .loading {
+            display: none;
+            font-size: 16px;
             font-weight: bold;
+            color: blue;
+            margin-top: 15px;
+        }
+
+        .error {
+            color: red;
+        }
+
+        .success {
+            color: green;
         }
     </style>
 </head>
 <body>
-    <h2>🎬 Terabox Video Sender</h2>
-    <p>Paste the Terabox link below and click "Send to Telegram"</p>
-    
-    <input type="text" id="teraboxUrl" placeholder="Enter Terabox URL here...">
-    <br>
-    <button onclick="sendVideo()">📤 Send to Telegram</button>
-    
-    <p id="status"></p>
+
+    <div class="profile-card">
+        <img src="https://i.imgur.com/QW3Q2Ke.png" alt="Profile">
+        <h2>🎬 Terabox Video Sender</h2>
+        <p>Paste the Terabox link below and click "Send to Telegram"</p>
+
+        <input type="text" id="teraboxUrl" placeholder="Enter Terabox URL here...">
+        <br>
+        <button onclick="sendVideo()">📤 Send to Telegram</button>
+
+        <p id="loading" class="loading">⏳ Processing... Please wait.</p>
+        <p id="status"></p>
+    </div>
 
     <script>
     async function sendVideo() {
         const url = document.getElementById("teraboxUrl").value;
         const statusText = document.getElementById("status");
+        const loadingText = document.getElementById("loading");
 
         if (!url) {
-            statusText.style.color = "red";
+            statusText.className = "error";
             statusText.innerText = "❌ Please enter a valid Terabox URL!";
             return;
         }
 
-        statusText.style.color = "blue";
-        statusText.innerText = "⏳ Processing... Please wait.";
+        statusText.innerText = "";
+        loadingText.style.display = "block"; 
 
         try {
             const response = await fetch(`https://terabox-api-nine.vercel.app/?url=${encodeURIComponent(url)}`);
             const data = await response.json();
+            loadingText.style.display = "none";
 
             if (response.ok) {
-                statusText.style.color = "green";
+                statusText.className = "success";
                 statusText.innerText = `✅ ${data.message || "Video sent successfully to Telegram!"}`;
             } else {
-                statusText.style.color = "red";
+                statusText.className = "error";
                 statusText.innerText = `❌ Error: ${data.detail || "Unknown error"}`;
             }
         } catch (error) {
-            statusText.style.color = "red";
+            loadingText.style.display = "none";
+            statusText.className = "error";
             statusText.innerText = `❌ Failed to send video! ${error.message}`;
         }
     }
     </script>
+
 </body>
 </html>
