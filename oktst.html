@@ -107,30 +107,42 @@
 		flex-grow: 1; /* কন্টেন্ট নিচের দিকে সরাবে */
 	 }
         /* ✅ Fixed Footer (Centered) */
-	.footer a {
-            color: #ffcc00;
-	    margin-top: 30px;
-            text-decoration: none;
-            font-weight: bold;
-        }
-        .footer a:hover {
-            text-decoration: underline;
-        }
-        .footer__copyright {
-            font-size: 10px; /* ফন্ট সাইজ */
-            font-weight: bold; /* টেক্সট মোটা করা */
-            margin-top: 5px;
-            margin-bottom: 10px;
-            animation: footer__copyrightAnimation 2s linear infinite;
-        }
-        @keyframes footer__copyrightAnimation {
-            0% { color: red; }
-            25% { color: blue; }
-            50% { color: green; }
-            75% { color: orange; }
-            100% { color: red; }
-        }
+	.footer {
+    position: fixed; /* পেজের নিচে স্থির থাকবে */
+    bottom: 0; /* একদম নিচে থাকবে */
+    left: 0;
+    width: 100%;
+    text-align: center;
+    padding: 10px;
+    background: rgba(0, 0, 0, 0.2); /* হালকা ব্যাকগ্রাউন্ড */
+}
+
+.footer a {
+    color: #ffcc00;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.footer a:hover {
+    text-decoration: underline;
+}
+
+.footer__copyright {
+    font-size: 10px; /* ফন্ট সাইজ */
+    font-weight: bold; /* টেক্সট মোটা করা */
+    margin-top: 5px;
+    animation: footer__copyrightAnimation 2s linear infinite;
+}
+
+@keyframes footer__copyrightAnimation {
+    0% { color: red; }
+    25% { color: blue; }
+    50% { color: green; }
+    75% { color: orange; }
+    100% { color: red; }
+}
     </style>
+	
 </head>
 <body>
 
