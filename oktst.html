@@ -19,23 +19,36 @@
             margin: 0;
         }
 
+        /* টাইটেল */
+        h1 {
+            margin-bottom: 20px;
+            font-size: 26px;
+            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
+        }
+
         /* কার্ড স্টাইল */
         .card {
             background: white;
             color: black;
             padding: 20px;
             border-radius: 12px;
-            box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.2), -5px -5px 15px rgba(255, 255, 255, 0.1);
+            box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.3), -5px -5px 15px rgba(255, 255, 255, 0.1);
             width: 90%;
             max-width: 400px;
             text-align: center;
         }
 
         /* ইনপুট বক্স */
+        .input-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+        }
+
         input {
-            width: 90%;
+            flex: 1;
             padding: 10px;
-            margin-top: 10px;
             border: 2px solid #1e3c72;
             border-radius: 5px;
             font-size: 16px;
@@ -56,6 +69,17 @@
 
         button:hover {
             background: #2a5298;
+        }
+
+        /* ক্লিয়ার বাটন */
+        .clear-btn {
+            background: red;
+            padding: 12px;
+            font-size: 16px;
+        }
+
+        .clear-btn:hover {
+            background: darkred;
         }
 
         /* লোডিং এনিমেশন */
@@ -86,10 +110,14 @@
 </head>
 <body>
 
+    <h1>🎬 Terabox Video Sender</h1>
+
     <div class="card">
-        <h2>🎬 Terabox Video Sender</h2>
         <form id="videoForm">
-            <input type="text" id="videoUrl" placeholder="Enter Terabox URL..." required>
+            <div class="input-container">
+                <input type="text" id="videoUrl" placeholder="Enter Terabox URL..." required>
+                <button type="button" class="clear-btn" id="clearButton">❌</button>
+            </div>
             <br>
             <button type="submit">📤 Send Video</button>
         </form>
@@ -137,6 +165,11 @@
                     successMessage.style.color = "red";
                     successMessage.innerHTML = "❌ ভিডিও পাঠাতে ব্যর্থ হয়েছে!";
                 });
+        });
+
+        // ক্লিয়ার বাটন ফাংশনালিটি
+        document.getElementById("clearButton").addEventListener("click", function() {
+            document.getElementById("videoUrl").value = "";
         });
     </script>
 
