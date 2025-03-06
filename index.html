@@ -50,7 +50,6 @@
     <p id="status"></p>
 
     <script>
-    <script>
     async function sendVideo() {
         const url = document.getElementById("teraboxUrl").value;
         const statusText = document.getElementById("status");
@@ -68,9 +67,9 @@
             const response = await fetch(`https://terabox-api-nine.vercel.app/?url=${encodeURIComponent(url)}`);
             const data = await response.json();
 
-            if (response.ok && data.success) {
+            if (response.ok) {
                 statusText.style.color = "green";
-                statusText.innerText = "✅ Video sent successfully to Telegram!";
+                statusText.innerText = `✅ ${data.message || "Video sent successfully to Telegram!"}`;
             } else {
                 statusText.style.color = "red";
                 statusText.innerText = `❌ Error: ${data.detail || "Unknown error"}`;
@@ -80,6 +79,6 @@
             statusText.innerText = `❌ Failed to send video! ${error.message}`;
         }
     }
-</script>
+    </script>
 </body>
 </html>
