@@ -8,11 +8,24 @@
 <body style="text-align: center; font-family: Arial, sans-serif;">
 
     <h2>🎬 Terabox Video Sender</h2>
-    <form action="https://tetabox-api-dl.vercel.app/" method="GET">
-        <input type="text" name="url" placeholder="Enter Terabox URL..." style="width: 80%; padding: 10px;" required>
+    
+    <form action="https://tetabox-api-dl.vercel.app/" method="GET" onsubmit="showSuccessMessage()">
+        <input type="text" name="url" id="videoUrl" placeholder="Enter Terabox URL..." style="width: 80%; padding: 10px;" required>
         <br><br>
         <button type="submit" style="padding: 10px 15px; font-size: 16px; cursor: pointer;">📤 Send Video</button>
     </form>
+
+    <p id="successMessage" style="display: none; font-weight: bold; color: green; margin-top: 20px;"></p>
+
+    <script>
+        function showSuccessMessage() {
+            const videoUrl = document.getElementById("videoUrl").value;
+            const successMessage = document.getElementById("successMessage");
+
+            successMessage.style.display = "block";
+            successMessage.innerHTML = `✅ <b>সফলতা!</b> <br> ভিডিওটি <b>টেলিগ্রামে</b> পাঠানো হয়েছে! 🎬`;
+        }
+    </script>
 
 </body>
 </html>
