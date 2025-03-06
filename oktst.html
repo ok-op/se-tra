@@ -42,19 +42,19 @@
                     border-radius: 50%; /* গোল আকৃতি */
                     object-fit: cover; /* ইমেজ ঠিকমতো দেখাবে */
                     display: block; /* ব্লক এলিমেন্ট বানানো */
-                    margin: 0 auto 10px auto; /* সেন্টারে আনতে */
-	    }
+                    margin: 0 auto 10px auto; /* সেন্টারে আনতে 
+		    }
 
-       
-.title {
+		    .title {
     font-size: 24px;
     font-weight: bold;
     position: relative;
-    top: 20px;
     width: 100%;
     text-align: center;
     white-space: nowrap;
     overflow: hidden;
+    display: flex;
+    justify-content: center;
 }
 
 .title span {
@@ -63,9 +63,12 @@
 }
 
 @keyframes titleMove {
-    0% { transform: translateX(-100%); } 
-    100% { transform: translateX(100%); } 
-}
+    0% { transform: translateX(100%); }  /* একদম ডান পাশে শুরু */
+    100% { transform: translateX(-100%); } /* একদম বাম পাশে শেষ */
+	    }
+
+	    
+
         
 
         /* ইনপুট ও বাটন */
