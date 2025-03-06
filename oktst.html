@@ -19,23 +19,29 @@
             margin: 0;
         }
 
-        /* টাইটেল স্টাইল */
+        /* টাইটেল */
         .title {
             font-size: 24px;
             font-weight: bold;
             margin-bottom: 10px;
+            position: absolute;
+            top: 20px;
         }
 
-        /* কার্ড স্টাইল */
+        /* কার্ড */
         .card {
             background: white;
             color: black;
             padding: 20px;
             border-radius: 12px;
             box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.2), -5px -5px 15px rgba(255, 255, 255, 0.1);
-            width: 90%;
-            max-width: 400px;
+            width: 80%;
+            max-width: 320px;
+            min-height: 300px;
             text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
         }
 
         /* ইনপুট ও বাটন */
@@ -104,7 +110,7 @@
 </head>
 <body>
 
-    <!-- টাইটেল কার্ডের বাইরে -->
+    <!-- টাইটেল -->
     <div class="title">🎬 Terabox Video Sender</div>
 
     <div class="card">
@@ -124,7 +130,7 @@
     </div>
 
     <!-- ফুটার -->
-    <div class="footer">Developed with ❤️ by [Your Name]</div>
+    <div class="footer">Developed With ❤️ By WOODcraft</div>
 
     <script>
         document.getElementById("videoForm").addEventListener("submit", function(event) {
