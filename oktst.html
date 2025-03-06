@@ -47,23 +47,25 @@
 
        
 .title {
-	font-size: 24px;
-        font-weight: bold;
-        position: absolute;
-        top: 20px;
-        left: 0;
-        width: 100%;
-        text-align: center;
-        white-space: nowrap;
-        overflow: hidden;
-        animation: titleMove 5s linear infinite; /* 5 সেকেন্ডে একবার লুপ */
+    font-size: 24px;
+    font-weight: bold;
+    position: relative;
+    top: 20px;
+    width: 100%;
+    text-align: center;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.title span {
+    display: inline-block;
+    animation: titleMove 5s linear infinite;
 }
 
 @keyframes titleMove {
-    0% { transform: translateX(-100%); } /* বাম দিকে বাইরে */
-    100% { transform: translateX(100%); } /* ডান দিকে বাইরে */
+    0% { transform: translateX(-100%); } 
+    100% { transform: translateX(100%); } 
 }
-
         
 
         /* ইনপুট ও বাটন */
@@ -165,7 +167,7 @@
 <body>
 
     <!-- টাইটেল -->
-    <div class="title">🎬 Terabox Video Sender</div>
+    <div class="title"><span>🎬 Terabox Video Sender</span></div>
 
     <div class="card">
     <!-- লোগো যোগ করা -->
