@@ -7,17 +7,34 @@
     <style>
         /* গ্লোবাল স্টাইল */
         body {
-            font-family: Arial, sans-serif;
-            text-align: center;
-            background: linear-gradient(135deg, #1e3c72, #2a5298);
-            color: white;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
-            margin: 0;
-        }
+    font-family: Arial, sans-serif;
+    text-align: center;
+    background: linear-gradient(135deg, #1e3c72, #2a5298);
+    color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start; /* উপরের দিকে সরাতে */
+    height: 100vh;
+    margin: 0;
+    padding-top: 50px; /* উপরের দিকে কিছু স্পেস রাখতে */
+}
+
+.card {
+    background: white;
+    color: black;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.2), -5px -5px 15px rgba(255, 255, 255, 0.1);
+    width: 80%;
+    max-width: 320px;
+    min-height: 300px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-top: 30px; /* উপরের দিকে সরানোর জন্য */
+}
 
         /* টাইটেল */
         .title {
@@ -28,22 +45,7 @@
             top: 20px;
         }
 
-        /* কার্ড */
-        .card {
-            background: white;
-            color: black;
-            top: 40px;
-            padding: 20px;
-            border-radius: 12px;
-            box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.2), -5px -5px 15px rgba(255, 255, 255, 0.1);
-            width: 80%;
-            max-width: 320px;
-            min-height: 300px;
-            text-align: center;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-        }
+        
 
         /* ইনপুট ও বাটন */
         input {
