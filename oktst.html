@@ -219,7 +219,7 @@ button:hover {
         </div>
     </footer>
         
-    <script>
+<!--    <script>
         document.getElementById("videoForm").addEventListener("submit", function(event) {
             event.preventDefault();
 
@@ -259,7 +259,63 @@ button:hover {
         document.getElementById("clearButton").addEventListener("click", function() {
             document.getElementById("videoUrl").value = "";
         });
-    </script>
+    </script> --->
+
+    <script>
+    document.getElementById("videoForm").addEventListener("submit", function(event) {
+        event.preventDefault();
+
+        const videoUrl = document.getElementById("videoUrl").value.trim();
+        const successMessage = document.getElementById("successMessage");
+        const loadingSpinner = document.getElementById("loadingSpinner");
+
+        if (!videoUrl) {
+            successMessage.style.display = "block";
+            successMessage.style.color = "red";
+            successMessage.innerHTML = "❌ দয়া করে একটি সঠিক URL লিখুন!";
+            return;
+        }
+
+        // ✅ সমস্ত ধরনের Terabox লিংক সাপোর্ট নিশ্চিত করতে কনভার্ট করা
+        const formattedUrl = formatTeraboxUrl(videoUrl);
+
+        // ✅ লোডিং স্পিনার দেখানো হবে
+        successMessage.style.display = "none";
+        loadingSpinner.style.display = "block";
+
+        // ✅ সব ধরনের Terabox লিংকের জন্য কাজ করবে এমন API ব্যবহার করা হচ্ছে
+        const apiUrl = `https://apiteraboxdl.crezybotz.workers.dev/?url=${encodeURIComponent(formattedUrl)}`;
+
+        fetch(apiUrl)
+            .then(response => response.json())
+            .then(data => {
+                loadingSpinner.style.display = "none"; // লোডিং বন্ধ
+                successMessage.style.display = "block";
+                successMessage.style.color = "green";
+                successMessage.innerHTML = `<i class='fa fa-telegram' aria-hidden='true'></i> Video successfully sent to Telegram!`;
+            })
+            .catch(error => {
+                loadingSpinner.style.display = "none";
+                successMessage.style.display = "block";
+                successMessage.style.color = "red";
+                successMessage.innerHTML = `<i class='fa fa-exclamation-triangle' aria-hidden='true'></i> Failed to send video. Try again!`;
+                console.error("Error:", error);
+            });
+    });
+
+    // ✅ সমস্ত ধরনের Terabox লিংক সাপোর্ট করতে ফরম্যাট ঠিক করা
+    function formatTeraboxUrl(url) {
+        if (url.includes("terabox.com") || url.includes("terafileshare.com")) {
+            return url.replace("www.", ""); // www থাকলে সরিয়ে দেওয়া
+        }
+        return url;
+    }
+
+    // ✅ Clear বাটনের ফাংশন
+    document.getElementById("clearButton").addEventListener("click", function() {
+        document.getElementById("videoUrl").value = "";
+    });
+    </script>	    
 
 </body>
 </html>
