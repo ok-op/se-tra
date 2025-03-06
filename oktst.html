@@ -4,25 +4,112 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Terabox Video Sender</title>
+    <style>
+        /* গ্লোবাল স্টাইল */
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background: linear-gradient(135deg, #1e3c72, #2a5298);
+            color: white;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        /* কার্ড স্টাইল */
+        .card {
+            background: white;
+            color: black;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.2), -5px -5px 15px rgba(255, 255, 255, 0.1);
+            width: 90%;
+            max-width: 400px;
+            text-align: center;
+        }
+
+        /* ইনপুট বক্স */
+        input {
+            width: 90%;
+            padding: 10px;
+            margin-top: 10px;
+            border: 2px solid #1e3c72;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        /* বাটন স্টাইল */
+        button {
+            background: #1e3c72;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            margin-top: 15px;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: 0.3s;
+        }
+
+        button:hover {
+            background: #2a5298;
+        }
+
+        /* লোডিং এনিমেশন */
+        .loader {
+            border: 4px solid rgba(255, 255, 255, 0.3);
+            border-top: 4px solid #1e3c72;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            display: none;
+            margin: 15px auto;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* ফুটার স্টাইল */
+        .footer {
+            position: fixed;
+            bottom: 10px;
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.8);
+        }
+    </style>
 </head>
-<body style="text-align: center; font-family: Arial, sans-serif;">
+<body>
 
-    <h2>🎬 Terabox Video Sender</h2>
-    
-    <form id="videoForm">
-        <input type="text" id="videoUrl" placeholder="Enter Terabox URL..." style="width: 80%; padding: 10px;" required>
-        <br><br>
-        <button type="submit" style="padding: 10px 15px; font-size: 16px; cursor: pointer;">📤 Send Video</button>
-    </form>
+    <div class="card">
+        <h2>🎬 Terabox Video Sender</h2>
+        <form id="videoForm">
+            <input type="text" id="videoUrl" placeholder="Enter Terabox URL..." required>
+            <br>
+            <button type="submit">📤 Send Video</button>
+        </form>
 
-    <p id="successMessage" style="display: none; font-weight: bold; color: green; margin-top: 20px;"></p>
+        <!-- লোডিং স্পিনার -->
+        <div class="loader" id="loadingSpinner"></div>
+
+        <p id="successMessage" style="display: none; font-weight: bold;"></p>
+    </div>
+
+    <!-- ফুটার -->
+    <div class="footer">Developed with ❤️ by [Your Name]</div>
 
     <script>
         document.getElementById("videoForm").addEventListener("submit", function(event) {
-            event.preventDefault(); // নতুন পেজ লোড হওয়া বন্ধ করবে
+            event.preventDefault();
 
             const videoUrl = document.getElementById("videoUrl").value;
             const successMessage = document.getElementById("successMessage");
+            const loadingSpinner = document.getElementById("loadingSpinner");
 
             if (!videoUrl) {
                 successMessage.style.display = "block";
@@ -31,19 +118,22 @@
                 return;
             }
 
-            successMessage.style.display = "block";
-            successMessage.style.color = "black";
-            successMessage.innerHTML = "⏳ ভিডিও পাঠানো হচ্ছে...";
+            // লোডিং স্পিনার দেখানো হবে
+            successMessage.style.display = "none";
+            loadingSpinner.style.display = "block";
 
-            // API Call (কিন্তু রেসপন্স দেখাবে না)
             const apiUrl = `https://tetabox-api-dl.vercel.app/?url=${encodeURIComponent(videoUrl)}`;
 
             fetch(apiUrl)
                 .then(() => {
+                    loadingSpinner.style.display = "none"; // লোডিং বন্ধ
+                    successMessage.style.display = "block";
                     successMessage.style.color = "green";
                     successMessage.innerHTML = `✅ ভিডিও সফলভাবে টেলিগ্রামে পাঠানো হয়েছে! 🎬`;
                 })
                 .catch(() => {
+                    loadingSpinner.style.display = "none";
+                    successMessage.style.display = "block";
                     successMessage.style.color = "red";
                     successMessage.innerHTML = "❌ ভিডিও পাঠাতে ব্যর্থ হয়েছে!";
                 });
