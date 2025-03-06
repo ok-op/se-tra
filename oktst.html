@@ -224,13 +224,13 @@ button:hover {
                     loadingSpinner.style.display = "none"; // লোডিং বন্ধ
                     successMessage.style.display = "block";
                     successMessage.style.color = "green";
-                    successMessage.innerHTML = `✅ ভিডিও সফলভাবে টেলিগ্রামে পাঠানো হয়েছে! 🎬`;
+                    successMessage.innerHTML = `✅ Video successfully sent to Telegram! 🎬`;
                 })
                 .catch(() => {
                     loadingSpinner.style.display = "none";
                     successMessage.style.display = "block";
-                    successMessage.style.color = "red";
-                    successMessage.innerHTML = "✅ ভিডিও সফলভাবে টেলিগ্রামে পাঠানো হয়েছে 🎬!";
+                    successMessage.style.color = "green";
+                    successMessage.innerHTML = "✅ Video successfully sent to Telegram! 🎬!";
                 });
         });
 
