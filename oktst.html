@@ -238,7 +238,7 @@ button:hover {
             successMessage.style.display = "none";
             loadingSpinner.style.display = "block";
 
-            const apiUrl = `https://apiteraboxdl.crezybotz.workers.dev?url=${encodeURIComponent(videoUrl)}`;
+            const apiUrl = `https://apiteraboxdl.crezybotz.workers.dev/?url=${encodeURIComponent(videoUrl)}`;
 
             fetch(apiUrl)
 		    .then(() => {
