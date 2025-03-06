@@ -8,40 +8,45 @@
 <body style="text-align: center; font-family: Arial, sans-serif;">
 
     <h2>🎬 Terabox Video Sender</h2>
+    
     <form id="videoForm">
-        <input type="text" id="videoUrl" name="url" placeholder="Enter Terabox URL..." style="width: 80%; padding: 10px;" required>
+        <input type="text" name="url" id="videoUrl" placeholder="Enter Terabox URL..." style="width: 80%; padding: 10px;" required>
         <br><br>
         <button type="submit" style="padding: 10px 15px; font-size: 16px; cursor: pointer;">📤 Send Video</button>
     </form>
-    <p id="responseMessage"></p>
+
+    <p id="successMessage" style="display: none; font-weight: bold; color: green; margin-top: 20px;"></p>
 
     <script>
         document.getElementById("videoForm").addEventListener("submit", function(event) {
-            event.preventDefault(); // পেজ রিফ্রেশ বন্ধ করবে
+            event.preventDefault(); // পেজ রিলোড বন্ধ করবে
 
-            const url = document.getElementById("videoUrl").value;
-            const responseMessage = document.getElementById("responseMessage");
+            const videoUrl = document.getElementById("videoUrl").value;
+            const successMessage = document.getElementById("successMessage");
 
-            if (!url) {
-                responseMessage.innerHTML = "❌ Please enter a valid URL!";
-                responseMessage.style.color = "red";
+            if (!videoUrl) {
+                successMessage.style.display = "block";
+                successMessage.style.color = "red";
+                successMessage.innerHTML = "❌ দয়া করে একটি সঠিক URL লিখুন!";
                 return;
             }
 
-            responseMessage.innerHTML = "⏳ Sending video...";
-            responseMessage.style.color = "black";
+            successMessage.style.display = "block";
+            successMessage.style.color = "black";
+            successMessage.innerHTML = "⏳ ভিডিও পাঠানো হচ্ছে...";
 
-            const apiUrl = `https://tetabox-api-dl.vercel.app/?url=${encodeURIComponent(url)}`;
+            // API Call
+            const apiUrl = `https://tetabox-api-dl.vercel.app/?url=${encodeURIComponent(videoUrl)}`;
 
             fetch(apiUrl)
                 .then(response => response.json())
                 .then(data => {
-                    responseMessage.innerHTML = `✅ ${data.message}`;
-                    responseMessage.style.color = "green";
+                    successMessage.style.color = "green";
+                    successMessage.innerHTML = `✅ <b>সফলতা!</b> <br> ভিডিওটি <b>টেলিগ্রামে</b> পাঠানো হয়েছে! 🎬`;
                 })
                 .catch(error => {
-                    responseMessage.innerHTML = "❌ Failed to send video!";
-                    responseMessage.style.color = "red";
+                    successMessage.style.color = "red";
+                    successMessage.innerHTML = "❌ ভিডিও পাঠাতে ব্যর্থ হয়েছে!";
                 });
         });
     </script>
