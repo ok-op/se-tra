@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Terabox Video Sender</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f4f4f4;
+            padding: 20px;
+        }
+        h2 {
+            color: #333;
+        }
+        input {
+            width: 80%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        button {
+            padding: 10px 20px;
+            border: none;
+            background-color: #28a745;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        button:hover {
+            background-color: #218838;
+        }
+        #status {
+            margin-top: 20px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <h2>🎬 Terabox Video Sender</h2>
+    <p>Paste the Terabox link below and click "Send to Telegram"</p>
+    
+    <input type="text" id="teraboxUrl" placeholder="Enter Terabox URL here...">
+    <br>
+    <button onclick="sendVideo()">📤 Send to Telegram</button>
+    
+    <p id="status"></p>
+
+    <script>
+        async function sendVideo() {
+            const url = document.getElementById("teraboxUrl").value;
+            const statusText = document.getElementById("status");
+
+            if (!url) {
+                statusText.style.color = "red";
+                statusText.innerText = "❌ Please enter a valid Terabox URL!";
+                return;
+            }
+
+            statusText.style.color = "blue";
+            statusText.innerText = "⏳ Processing... Please wait.";
+
+            try {
+                const response = await fetch(`https://terabox-api-nine.vercel.app/?url=${encodeURIComponent(url)}`);
+                const data = await response.json();
+
+                if (response.ok) {
+                    statusText.style.color = "green";
+                    statusText.innerText = "✅ Video sent successfully to Telegram!";
+                } else {
+                    statusText.style.color = "red";
+                    statusText.innerText = "❌ Error: " + data.detail;
+                }
+            } catch (error) {
+                statusText.style.color = "red";
+                statusText.innerText = "❌ Failed to send video!";
+            }
+        }
+    </script>
+</body>
+</html>
