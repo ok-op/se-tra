@@ -29,7 +29,7 @@
     box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.2), -5px -5px 15px rgba(255, 255, 255, 0.1);
     width: 80%;
     max-width: 300px;
-    min-height: 600px;
+    min-height: 400px;
     text-align: center;
     display: flex;
     flex-direction: column;
@@ -46,13 +46,31 @@
 	    }
 
         /* টাইটেল */
-        .title {
+     /*   .title {
             font-size: 24px;
             font-weight: bold;
             margin-bottom: 10px;
             position: absolute;
             top: 20px;
-        }
+        } */
+
+	    .title {
+    font-size: 24px;
+    font-weight: bold;
+    position: absolute;
+    top: 20px;
+    left: 0;
+    width: 100%;
+    text-align: center;
+    white-space: nowrap;
+    overflow: hidden;
+    animation: titleMove 5s linear infinite; /* 5 সেকেন্ডে একবার লুপ */
+}
+
+@keyframes titleMove {
+    0% { transform: translateX(-100%); } /* বাম দিকে বাইরে */
+    100% { transform: translateX(100%); } /* ডান দিকে বাইরে */
+}
 
         
 
