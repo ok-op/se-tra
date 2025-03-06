@@ -37,9 +37,12 @@
     margin-top: 30px; /* উপরের দিকে সরানোর জন্য */
 }
 	    .card-logo {
-    width: 80px; /* লোগোর আকার */
-    height: auto;
-    margin-bottom: 10px; /* টেক্সটের সাথে কিছু গ্যাপ */
+		    width: 80px; /* লোগোর আকার */
+                    height: 80px; /* উচ্চতা সেট করুন */
+                    border-radius: 50%; /* গোল আকৃতি */
+                    object-fit: cover; /* ইমেজ ঠিকমতো দেখাবে */
+                    display: block; /* ব্লক এলিমেন্ট বানানো */
+                    margin: 0 auto 10px auto; /* সেন্টারে আনতে */
 	    }
 
         /* টাইটেল */
