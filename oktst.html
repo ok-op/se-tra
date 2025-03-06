@@ -10,7 +10,7 @@
     <h2>🎬 Terabox Video Sender</h2>
     
     <form id="videoForm">
-        <input type="text" name="url" id="videoUrl" placeholder="Enter Terabox URL..." style="width: 80%; padding: 10px;" required>
+        <input type="text" id="videoUrl" placeholder="Enter Terabox URL..." style="width: 80%; padding: 10px;" required>
         <br><br>
         <button type="submit" style="padding: 10px 15px; font-size: 16px; cursor: pointer;">📤 Send Video</button>
     </form>
@@ -19,7 +19,7 @@
 
     <script>
         document.getElementById("videoForm").addEventListener("submit", function(event) {
-            event.preventDefault(); // পেজ রিলোড বন্ধ করবে
+            event.preventDefault(); // নতুন পেজ লোড হওয়া বন্ধ করবে
 
             const videoUrl = document.getElementById("videoUrl").value;
             const successMessage = document.getElementById("successMessage");
@@ -35,16 +35,15 @@
             successMessage.style.color = "black";
             successMessage.innerHTML = "⏳ ভিডিও পাঠানো হচ্ছে...";
 
-            // API Call
+            // API Call (কিন্তু রেসপন্স দেখাবে না)
             const apiUrl = `https://tetabox-api-dl.vercel.app/?url=${encodeURIComponent(videoUrl)}`;
 
             fetch(apiUrl)
-                .then(response => response.json())
-                .then(data => {
+                .then(() => {
                     successMessage.style.color = "green";
-                    successMessage.innerHTML = `✅ <b>সফলতা!</b> <br> ভিডিওটি <b>টেলিগ্রামে</b> পাঠানো হয়েছে! 🎬`;
+                    successMessage.innerHTML = `✅ ভিডিও সফলভাবে টেলিগ্রামে পাঠানো হয়েছে! 🎬`;
                 })
-                .catch(error => {
+                .catch(() => {
                     successMessage.style.color = "red";
                     successMessage.innerHTML = "❌ ভিডিও পাঠাতে ব্যর্থ হয়েছে!";
                 });
