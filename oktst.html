@@ -27,7 +27,7 @@
     border-radius: 12px;
     box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.2), -5px -5px 15px rgba(255, 255, 255, 0.1);
     width: 80%;
-    max-width: 320px;
+    max-width: 220px;
     min-height: 300px;
     text-align: center;
     display: flex;
@@ -102,12 +102,32 @@
             100% { transform: rotate(360deg); }
         }
 
-        /* ফুটার */
-        .footer {
-            position: fixed;
-            bottom: 10px;
-            font-size: 14px;
-            color: rgba(255, 255, 255, 0.8);
+        .main-content {
+		flex-grow: 1; /* কন্টেন্ট নিচের দিকে সরাবে */
+	 }
+        /* ✅ Fixed Footer (Centered) */
+	.footer a {
+            color: #ffcc00;
+	    margin-top: 20px;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .footer a:hover {
+            text-decoration: underline;
+        }
+        .footer__copyright {
+            font-size: 10px; /* ফন্ট সাইজ */
+            font-weight: bold; /* টেক্সট মোটা করা */
+            margin-top: 5px;
+            margin-bottom: 10px;
+            animation: footer__copyrightAnimation 2s linear infinite;
+        }
+        @keyframes footer__copyrightAnimation {
+            0% { color: red; }
+            25% { color: blue; }
+            50% { color: green; }
+            75% { color: orange; }
+            100% { color: red; }
         }
     </style>
 </head>
@@ -133,9 +153,16 @@
         <p id="successMessage" style="display: none; font-weight: bold;"></p>
     </div>
 
+    <div class="main-content">
+  <!-- Main content here -->
     <!-- ফুটার -->
-    <div class="footer">Developed With ❤️ By WOODcraft</div>
-
+    <footer class="footer">
+        Powered By : <a href="https://t.me/Opleech_WD" target="_blank"><i class="fa fa-telegram" aria-hidden="true"></i><b> WOODcraft</b></a>
+        <div class="footer__copyright">
+            © 2025 TeraBox Video Downloader. All rights reserved.
+        </div>
+    </footer>
+        
     <script>
         document.getElementById("videoForm").addEventListener("submit", function(event) {
             event.preventDefault();
