@@ -9,44 +9,38 @@
 </head>
 <body>
 
-    <div class="title"><i class="fa fa-film" aria-hidden="true"></i> Terabox Video Sender</div>
+    <div class="title"><i class="fa fa-film"></i> Terabox Video Sender</div>
 
     <div class="card">
         <img src="https://graph.org/file/4e8a1172e8ba4b7a0bdfa.jpg" alt="Logo" class="card-logo">
-        
+    
         <form id="videoForm">
-            <p><i class="fa fa-chain-broken" aria-hidden="true"></i> Add Terabox Link Here</p>
+            <p><i class="fa fa-chain-broken"></i> Add Terabox Link Here</p>
             <input type="text" id="videoUrl" placeholder="Enter Terabox URL..." required>
             <br>
             <div class="btn-group">
-                <button type="submit"><i class="fa fa-download" aria-hidden="true"></i> Generate Link</button>
-                <button type="button" class="clear-btn" id="clearButton"><i class="fa fa-refresh" aria-hidden="true"></i> Clear</button>
+                <button type="submit"><i class="fa fa-download"></i> Send Video</button>
+                <button type="button" class="clear-btn" id="clearButton"><i class="fa fa-refresh"></i> Clear</button>
             </div>
         </form>
-        
-        <div class="loader" id="loadingSpinner" style="display: none;"></div>
-        
-        <div id="result" style="display: none;">
-            <img id="videoThumbnail" src="" alt="Video Thumbnail" style="width: 100%; max-width: 400px; margin-top: 10px;">
-            <p><strong>📂 File Name:</strong> <span id="fileName"></span></p>
-            <p><strong>📦 File Size:</strong> <span id="fileSize"></span></p>
-            <a id="downloadLink" href="#" class="btn" target="_blank"><i class="fa fa-cloud-download" aria-hidden="true"></i> Download Now</a>
-        </div>
-
+    
+        <div class="loader" id="loadingSpinner"></div>
+    
         <p id="successMessage" style="display: none; font-weight: bold;"></p>
-    </div>
 
-    <div class="description">
-        Add Terabox link to the output box and click on "Generate Link" to get your video.
+        <div id="fileInfo" style="display: none; text-align: center;">
+            <h3>📁 File Info</h3>
+            <p><b>Name:</b> <span id="fileName"></span></p>
+            <p><b>Size:</b> <span id="fileSize"></span></p>
+            <a id="downloadBtn" href="#" target="_blank" class="btn"><i class="fa fa-download"></i> Download</a>
+        </div>
     </div>
 
     <footer class="footer">
-        Powered By : <a href="https://t.me/Opleech_WD" target="_blank"><i class="fa fa-telegram" aria-hidden="true"></i><b> WOODcraft</b></a>
-        <div class="footer__copyright">
-            © 2025 TeraBox Video Downloader. All rights reserved.
-        </div>
+        Powered By: <a href="https://t.me/Opleech_WD" target="_blank"><i class="fa fa-telegram"></i><b> WOODcraft</b></a>
+        <div class="footer__copyright">© 2025 TeraBox Video Downloader. All rights reserved.</div>
     </footer>
-        
+
     <script>
         document.getElementById("videoForm").addEventListener("submit", async function(event) {
             event.preventDefault();
@@ -54,21 +48,20 @@
             const videoUrl = document.getElementById("videoUrl").value;
             const successMessage = document.getElementById("successMessage");
             const loadingSpinner = document.getElementById("loadingSpinner");
-            const resultDiv = document.getElementById("result");
-            const fileNameElement = document.getElementById("fileName");
-            const fileSizeElement = document.getElementById("fileSize");
-            const downloadLinkElement = document.getElementById("downloadLink");
-            const videoThumbnail = document.getElementById("videoThumbnail");
+            const fileInfo = document.getElementById("fileInfo");
+            const fileNameEl = document.getElementById("fileName");
+            const fileSizeEl = document.getElementById("fileSize");
+            const downloadBtn = document.getElementById("downloadBtn");
 
             if (!videoUrl) {
                 successMessage.style.display = "block";
                 successMessage.style.color = "red";
-                successMessage.innerHTML = "❌ Please enter a valid Terabox URL!";
+                successMessage.innerHTML = "❌ দয়া করে একটি সঠিক URL লিখুন!";
                 return;
             }
 
             successMessage.style.display = "none";
-            resultDiv.style.display = "none";
+            fileInfo.style.display = "none";
             loadingSpinner.style.display = "block";
 
             try {
@@ -76,61 +69,53 @@
                 const response = await fetch(apiUrl);
                 const data = await response.json();
 
-                if (data.status === "✅ Success!" && data.download) {
-                    fileNameElement.textContent = data.file_name;
-                    fileSizeElement.textContent = data.file_size;
-                    downloadLinkElement.href = data.download;
-                    videoThumbnail.src = data.thumbnail || "https://graph.org/file/4e8a1172e8ba4b7a0bdfa.jpg"; 
-
-                    resultDiv.style.display = "block";
-                    
-                    // টেলিগ্রামে লিংক পাঠানো
-                    sendToTelegram(data.file_name, data.file_size, data.download);
-                    
-                } else {
+                if (data.status === "✅ Success!") {
+                    loadingSpinner.style.display = "none";
                     successMessage.style.display = "block";
-                    successMessage.style.color = "red";
-                    successMessage.innerHTML = "❌ Failed to generate download link!";
+                    successMessage.style.color = "green";
+                    successMessage.innerHTML = `✅ File found and sent to Telegram!`;
+
+                    // ফাইলের তথ্য দেখানো
+                    fileNameEl.innerText = data.file_name;
+                    fileSizeEl.innerText = data.file_size;
+                    downloadBtn.href = data.download_link;
+                    fileInfo.style.display = "block";
+
+                    // **টেলিগ্রামে পাঠানোর জন্য Bot API কল করা**
+                    const telegramBotToken = "7398766624:AAEd3fUmP80daHPzezhlg_0xSY-PI8HXjs4";  // আপনার বটের টোকেন বসান
+                    const chatId = "-1002086815735";  // আপনার চ্যানেলের Chat ID বসান
+                    const caption = `📥 **File Name:** ${data.file_name}\n📦 **Size:** ${data.file_size}\n\n🔗 [Download Now](${data.download_link})`;
+
+                    await fetch(`https://api.telegram.org/bot${telegramBotToken}/sendPhoto`, {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify({
+                            chat_id: chatId,
+                            photo: "https://graph.org/file/4e8a1172e8ba4b7a0bdfa.jpg", // ইমেজ লিংক
+                            caption: caption,
+                            parse_mode: "Markdown",
+                            reply_markup: {
+                                inline_keyboard: [[{ text: "📥 Download", url: data.download_link }]]
+                            }
+                        })
+                    });
+
+                } else {
+                    throw new Error("Invalid response from API");
                 }
             } catch (error) {
+                loadingSpinner.style.display = "none";
                 successMessage.style.display = "block";
                 successMessage.style.color = "red";
                 successMessage.innerHTML = "❌ Error fetching data!";
-            } finally {
-                loadingSpinner.style.display = "none";
+                console.error(error);
             }
         });
 
         document.getElementById("clearButton").addEventListener("click", function() {
             document.getElementById("videoUrl").value = "";
-            document.getElementById("result").style.display = "none";
+            document.getElementById("fileInfo").style.display = "none";
         });
-
-        async function sendToTelegram(fileName, fileSize, downloadLink) {
-            const botToken = "7398766624:AAEd3fUmP80daHPzezhlg_0xSY-PI8HXjs4"; // এখানে আপনার বট টোকেন দিন
-            const chatId = "-1002086815735"; // এখানে আপনার চ্যানেল বা গ্রুপের ID দিন
-
-            const message = `📢 **New Terabox Video**\n\n📂 **File Name:** ${fileName}\n📦 **File Size:** ${fileSize}\n\n🔗 **Download Link:** [Click Here](${downloadLink})`;
-
-            const telegramApiUrl = `https://api.telegram.org/bot${botToken}/sendMessage`;
-            const payload = {
-                chat_id: chatId,
-                text: message,
-                parse_mode: "Markdown",
-                disable_web_page_preview: false
-            };
-
-            try {
-                await fetch(telegramApiUrl, {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify(payload)
-                });
-                console.log("📤 Successfully sent to Telegram!");
-            } catch (error) {
-                console.error("❌ Error sending to Telegram:", error);
-            }
-        }
     </script>
 
 </body>
