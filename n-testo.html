@@ -9,11 +9,9 @@
 </head>
 <body>
 
-    <!-- টাইটেল -->
     <div class="title"><i class="fa fa-film" aria-hidden="true"></i> Terabox Video Sender</div>
 
     <div class="card">
-        <!-- লোগো -->
         <img src="https://graph.org/file/4e8a1172e8ba4b7a0bdfa.jpg" alt="Logo" class="card-logo">
         
         <form id="videoForm">
@@ -21,112 +19,89 @@
             <input type="text" id="videoUrl" placeholder="Enter Terabox URL..." required>
             <br>
             <div class="btn-group">
-                <button type="submit"><i class="fa fa-download" aria-hidden="true"></i> Send Video</button>
+                <button type="submit"><i class="fa fa-download" aria-hidden="true"></i> Generate Link</button>
                 <button type="button" class="clear-btn" id="clearButton"><i class="fa fa-refresh" aria-hidden="true"></i> Clear</button>
             </div>
         </form>
         
-        <!-- লোডিং স্পিনার -->
-        <div class="loader" id="loadingSpinner"></div>
+        <div class="loader" id="loadingSpinner" style="display: none;"></div>
+        
+        <div id="result" style="display: none;">
+            <img id="videoThumbnail" src="" alt="Video Thumbnail" style="width: 100%; max-width: 400px; margin-top: 10px;">
+            <p><strong>📂 File Name:</strong> <span id="fileName"></span></p>
+            <p><strong>📦 File Size:</strong> <span id="fileSize"></span></p>
+            <a id="downloadLink" href="#" class="btn" target="_blank"><i class="fa fa-cloud-download" aria-hidden="true"></i> Download Now</a>
+        </div>
 
-        <p id="fileInfo" style="display: none;"></p> <!-- ফাইল তথ্য দেখানোর জন্য -->
         <p id="successMessage" style="display: none; font-weight: bold;"></p>
     </div>
 
     <div class="description">
-        Add Terabox link to the output box and click on send video button and check your video on the Telegram channel.
+        Add Terabox link to the output box and click on "Generate Link" to get your video.
     </div>
 
-    <div class="main-content">
-        <!-- ফুটার -->
-        <footer class="footer">
-            Powered By : <a href="https://t.me/Opleech_WD" target="_blank"><i class="fa fa-telegram" aria-hidden="true"></i><b> WOODcraft</b></a>
-            <div class="footer__copyright">
-                © 2025 TeraBox Video Downloader. All rights reserved.
-            </div>
-        </footer>
-    </div>
-
+    <footer class="footer">
+        Powered By : <a href="https://t.me/Opleech_WD" target="_blank"><i class="fa fa-telegram" aria-hidden="true"></i><b> WOODcraft</b></a>
+        <div class="footer__copyright">
+            © 2025 TeraBox Video Downloader. All rights reserved.
+        </div>
+    </footer>
+        
     <script>
         document.getElementById("videoForm").addEventListener("submit", async function(event) {
             event.preventDefault();
 
             const videoUrl = document.getElementById("videoUrl").value;
             const successMessage = document.getElementById("successMessage");
-            const fileInfo = document.getElementById("fileInfo");
             const loadingSpinner = document.getElementById("loadingSpinner");
+            const resultDiv = document.getElementById("result");
+            const fileNameElement = document.getElementById("fileName");
+            const fileSizeElement = document.getElementById("fileSize");
+            const downloadLinkElement = document.getElementById("downloadLink");
+            const videoThumbnail = document.getElementById("videoThumbnail");
 
             if (!videoUrl) {
                 successMessage.style.display = "block";
                 successMessage.style.color = "red";
-                successMessage.innerHTML = "❌ দয়া করে একটি সঠিক URL লিখুন!";
+                successMessage.innerHTML = "❌ Please enter a valid Terabox URL!";
                 return;
             }
 
-            // লোডিং স্পিনার দেখানো
             successMessage.style.display = "none";
-            fileInfo.style.display = "none";
+            resultDiv.style.display = "none";
             loadingSpinner.style.display = "block";
 
             try {
-                const apiUrl = `https://wdzone-terabox-api.vercel.app/?url=${encodeURIComponent(videoUrl)}`;
+                const apiUrl = `https://wdzone-terabox-api.vercel.app/api?url=${encodeURIComponent(videoUrl)}`;
                 const response = await fetch(apiUrl);
                 const data = await response.json();
 
-                if (data.success) {
-                    loadingSpinner.style.display = "none";
+                if (data.status === "✅ Success!" && data.download) {
+                    fileNameElement.textContent = data.file_name;
+                    fileSizeElement.textContent = data.file_size;
+                    downloadLinkElement.href = data.download;
+                    videoThumbnail.src = data.thumbnail || "https://graph.org/file/4e8a1172e8ba4b7a0bdfa.jpg"; 
 
-                    // ফাইলের নাম ও সাইজ দেখানো
-                    fileInfo.style.display = "block";
-                    fileInfo.innerHTML = `
-                        <b>📁 File Name:</b> ${data.file_name} <br>
-                        <b>📦 File Size:</b> ${data.file_size} <br>
-                        <a href="${data.download_link}" target="_blank" class="download-btn">
-                            <i class="fa fa-download" aria-hidden="true"></i> Download File
-                        </a>
-                    `;
-
-                    // টেলিগ্রামে পোস্ট করা
-                    successMessage.style.display = "block";
-                    successMessage.style.color = "green";
-                    successMessage.innerHTML = `
-                        <i class='fa fa-telegram' aria-hidden='true'></i> 
-                        Video successfully sent to Telegram!
-                    `;
-
-                    // টেলিগ্রামে পোস্ট করার জন্য AJAX
-                    fetch("https://api.telegram.org/bot7398766624:AAEd3fUmP80daHPzezhlg_0xSY-PI8HXjs4/sendPhoto", {
-                        method: "POST",
-                        headers: { "Content-Type": "application/json" },
-                        body: JSON.stringify({
-                            chat_id: "@Opleech_WD",
-                            photo: "https://graph.org/file/4e8a1172e8ba4b7a0bdfa.jpg",
-                            caption: `🎬 <b>File Name:</b> ${data.file_name}\n📦 <b>Size:</b> ${data.file_size}\n\n⬇️ <b>Download Link:</b> [Click Here](${data.download_link})`,
-                            parse_mode: "HTML",
-                            reply_markup: {
-                                inline_keyboard: [[{ text: "⬇ Download File", url: data.download_link }]]
-                            }
-                        })
-                    });
-
+                    resultDiv.style.display = "block";
                 } else {
-                    throw new Error("Failed to fetch data.");
+                    successMessage.style.display = "block";
+                    successMessage.style.color = "red";
+                    successMessage.innerHTML = "❌ Failed to generate download link!";
                 }
             } catch (error) {
-                loadingSpinner.style.display = "none";
                 successMessage.style.display = "block";
                 successMessage.style.color = "red";
-                successMessage.innerHTML = "❌ ডাউনলোড লিংক জেনারেট করা সম্ভব হয়নি!";
+                successMessage.innerHTML = "❌ Error fetching data!";
+            } finally {
+                loadingSpinner.style.display = "none";
             }
         });
 
-        // Clear বাটনের ফাংশন
         document.getElementById("clearButton").addEventListener("click", function() {
             document.getElementById("videoUrl").value = "";
-            document.getElementById("fileInfo").style.display = "none";
-            document.getElementById("successMessage").style.display = "none";
+            document.getElementById("result").style.display = "none";
         });
     </script>
 
 </body>
-</html>
+    </html>
