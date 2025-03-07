@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="./tsto.css" />
+    <title>Terabox Video Sender</title>	
+</head>
+<body>
+
+    <!-- টাইটেল -->
+    <div class="title"><i class="fa fa-film" aria-hidden="true"></i> Terabox Video Sender</div>
+
+    <div class="card">
+    <!-- লোগো যোগ করা -->
+    <img src="https://graph.org/file/4e8a1172e8ba4b7a0bdfa.jpg" alt="Logo" class="card-logo">
+    
+    <form id="videoForm">
+        <p><i class="fa fa-chain-broken" aria-hidden="true"></i> Add Terabox Link Here</p>
+        <input type="text" id="videoUrl" placeholder="Enter Terabox URL..." required>
+        <br>
+        <div class="btn-group">
+            <button type="submit"><i class="fa fa-download" aria-hidden="true"></i> Send Video</button>
+            <button type="button" class="clear-btn" id="clearButton"><i class="fa fa-refresh" aria-hidden="true"></i> Clear</button>
+        </div>
+    </form>
+    
+    <!-- লোডিং স্পিনার -->
+    <div class="loader" id="loadingSpinner"></div>
+    
+    <p id="successMessage" style="display: none; font-weight: bold;"></p>
+    </div>
+
+	<div class="description">
+		Add Terabox link to the output box and click on send video button and check your video on the Telegram channel.</div>
+	
+
+    <div class="main-content">
+  <!-- Main content here -->
+    <!-- ফুটার -->
+    <footer class="footer">
+        Powered By : <a href="https://t.me/Opleech_WD" target="_blank"><i class="fa fa-telegram" aria-hidden="true"></i><b> WOODcraft</b></a>
+        <div class="footer__copyright">
+            © 2025 TeraBox Video Downloader. All rights reserved.
+        </div>
+    </footer>
+        
+    <script>
+        document.getElementById("videoForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+
+            const videoUrl = document.getElementById("videoUrl").value;
+            const successMessage = document.getElementById("successMessage");
+            const loadingSpinner = document.getElementById("loadingSpinner");
+
+            if (!videoUrl) {
+                successMessage.style.display = "block";
+                successMessage.style.color = "red";
+                successMessage.innerHTML = "❌ দয়া করে একটি সঠিক URL লিখুন!";
+                return;
+            }
+
+            // লোডিং স্পিনার দেখানো হবে
+            successMessage.style.display = "none";
+            loadingSpinner.style.display = "block";
+
+            const apiUrl = `https://apiteraboxdl.crezybotz.workers.dev/?url=${encodeURIComponent(videoUrl)}`;
+
+            fetch(apiUrl)
+		    .then(() => {
+			    loadingSpinner.style.display = "none"; // লোডিং বন্ধ
+                            successMessage.style.display = "block";
+                            successMessage.style.color = "green";
+                            successMessage.innerHTML = `<i class='fa fa-telegram' aria-hidden='true'></i> Video successfully sent to Telegram!`;
+		    })
+		    .catch(() => {
+			    loadingSpinner.style.display = "none";
+                            successMessage.style.display = "block";
+                            successMessage.style.color = "green";
+                            successMessage.innerHTML = `<i class='fa fa-telegram' aria-hidden='true'></i> Video successfully sent to Telegram!`;
+		    });
+	});
+
+        // Clear বাটনের ফাংশন
+        document.getElementById("clearButton").addEventListener("click", function() {
+            document.getElementById("videoUrl").value = "";
+        });
+    </script>
+
+</body>
+</html>
