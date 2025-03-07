@@ -1,0 +1,171 @@
+/* ✅ গ্লোবাল স্টাইল */
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    background: linear-gradient(135deg, #1e3c72, #2a5298);
+    color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    height: 100vh;
+    margin: 0;
+    padding-top: 50px;
+}
+
+/* ✅ কার্ড স্টাইল */
+.card {
+    background: white;
+    color: black;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.2), -5px -5px 15px rgba(255, 255, 255, 0.1);
+    width: 80%;
+    max-width: 250px;
+    min-height: 300px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-top: 30px;
+}
+
+/* ✅ লোগো */
+.card-logo {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    border: 2px solid green;
+    object-fit: cover;
+    display: block;
+    margin: 0 auto 10px auto;
+}
+
+/* ✅ টাইটেল */
+.title {
+    font-size: 24px;
+    font-weight: bold;
+    margin-top: 5px;
+    animation: titleAnimation 2s linear infinite;
+}
+
+@keyframes titleAnimation {
+    0% { color: red; }
+    25% { color: blue; }
+    50% { color: green; }
+    75% { color: orange; }
+    100% { color: red; }
+}
+
+/* ✅ ইনপুট ও বাটন */
+input {
+    width: 85%;
+    padding: 10px;
+    margin-top: 10px;
+    border: 2px solid #1e3c72;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+.description {
+	font-size: 18px;
+        font-weight: bold;
+        color: #222;
+        text-shadow: 3px 3px 5px rgba(0, 0, 0, 0.3);
+        background: white;
+        padding: 10px;
+        border-radius: 10px;
+        box-shadow: 5px 5px 15px rgba(0, 0, 0);
+        display: inline-block;
+        margin-bottom: 20px;
+	margin-top: 20px;
+	max-width: 270px;
+        min-height: 90px;
+}	    
+
+.btn-group {
+    margin-top: 15px;
+}
+
+button {
+    background: #1e3c72;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    font-size: 14px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: 0.3s;
+    margin: 5px;
+}
+
+button:hover {
+    background: #2a5298;
+}
+
+.clear-btn {
+    background: #ff4444;
+}
+
+.clear-btn:hover {
+    background: #cc0000;
+}
+
+/* ✅ লোডিং এনিমেশন */
+.loader {
+    border: 4px solid rgba(255, 255, 255, 0.3);
+    border-top: 4px solid #1e3c72;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    animation: spin 1s linear infinite;
+    display: none;
+    margin: 15px auto;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* ✅ কন্টেন্ট */
+.main-content {
+    flex-grow: 1;
+}
+
+/* ✅ ফুটার */
+.footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    text-align: center;
+    padding: 10px;
+    background: rgba(0, 0, 0, 0.2);
+}
+
+.footer a {
+    color: #ffcc00;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.footer a:hover {
+    text-decoration: underline;
+}
+
+/* ✅ কপিরাইট এনিমেশন */
+.footer__copyright {
+    font-size: 10px;
+    font-weight: bold;
+    margin-top: 5px;
+    animation: footerCopyrightAnimation 2s linear infinite;
+}
+
+@keyframes footerCopyrightAnimation {
+    0% { color: red; }
+    25% { color: blue; }
+    50% { color: green; }
+    75% { color: orange; }
+    100% { color: red; }
+}
