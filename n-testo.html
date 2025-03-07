@@ -83,6 +83,10 @@
                     videoThumbnail.src = data.thumbnail || "https://graph.org/file/4e8a1172e8ba4b7a0bdfa.jpg"; 
 
                     resultDiv.style.display = "block";
+                    
+                    // টেলিগ্রামে লিংক পাঠানো
+                    sendToTelegram(data.file_name, data.file_size, data.download);
+                    
                 } else {
                     successMessage.style.display = "block";
                     successMessage.style.color = "red";
@@ -101,7 +105,33 @@
             document.getElementById("videoUrl").value = "";
             document.getElementById("result").style.display = "none";
         });
+
+        async function sendToTelegram(fileName, fileSize, downloadLink) {
+            const botToken = "7398766624:AAEd3fUmP80daHPzezhlg_0xSY-PI8HXjs4"; // এখানে আপনার বট টোকেন দিন
+            const chatId = "-1002086815735"; // এখানে আপনার চ্যানেল বা গ্রুপের ID দিন
+
+            const message = `📢 **New Terabox Video**\n\n📂 **File Name:** ${fileName}\n📦 **File Size:** ${fileSize}\n\n🔗 **Download Link:** [Click Here](${downloadLink})`;
+
+            const telegramApiUrl = `https://api.telegram.org/bot${botToken}/sendMessage`;
+            const payload = {
+                chat_id: chatId,
+                text: message,
+                parse_mode: "Markdown",
+                disable_web_page_preview: false
+            };
+
+            try {
+                await fetch(telegramApiUrl, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(payload)
+                });
+                console.log("📤 Successfully sent to Telegram!");
+            } catch (error) {
+                console.error("❌ Error sending to Telegram:", error);
+            }
+        }
     </script>
 
 </body>
-    </html>
+</html>
