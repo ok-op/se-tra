@@ -16,12 +16,30 @@
             background: #ffffff;
             padding: 20px;
             border-radius: 10px;
-            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
             max-width: 500px;
             margin: auto;
-            border: 5px solid transparent;
-            border-image: linear-gradient(45deg, red, blue, green) 1;
+            position: relative;
+            text-align: center;
         }
+
+        /* ❤️ হার্ট বর্ডার স্টাইল */
+        .container::before {
+            content: "❤️ ❤️ ❤️ ❤️ ❤️";
+            position: absolute;
+            top: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 20px;
+        }
+        .container::after {
+            content: "❤️ ❤️ ❤️ ❤️ ❤️";
+            position: absolute;
+            bottom: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 20px;
+        }
+
         h2 {
             color: #333;
         }
@@ -55,23 +73,9 @@
             position: relative;
             overflow: hidden;
         }
-        button:before {
-            content: "";
-            position: absolute;
-            top: -10px;
-            left: -10px;
-            width: 150%;
-            height: 150%;
-            background: radial-gradient(circle, rgba(255, 255, 255, 0.3), rgba(0, 0, 0, 0));
-            opacity: 0;
-            transition: opacity 0.3s ease-in-out;
-        }
         button:hover {
             transform: translateY(-3px);
             box-shadow: 0px 8px 20px rgba(0, 0, 255, 0.4);
-        }
-        button:hover:before {
-            opacity: 1;
         }
         .message-box {
             font-weight: bold;
@@ -104,7 +108,7 @@
 <body>
 
     <div class="container">
-        <h2>Terabox API Response</h2>
+        <h2>Terabox Link Generate</h2>
         
         <input type="text" id="full-url" placeholder="Enter Terabox URL here...">
         
@@ -161,7 +165,7 @@
         }
 
         function openGroup() {
-            window.open("https://t.me/+4b9lEhq8esY3ZGJl", "_blank");
+            window.open("https://t.me/YOUR_GROUP_LINK", "_blank");
         }
     </script>
 
