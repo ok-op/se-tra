@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>API Response Fetcher</title>
+    <title>Terabox API Response</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -55,8 +55,11 @@
 <body>
 
     <div class="container">
-        <h2>API Response Fetcher</h2>
-        <input type="text" id="api-url" placeholder="Enter API URL here..." value="https://terabox-api-op.vercel.app/?url=https://teraboxapp.com/s/1PeZb7Yfl6MUWTXxksAMaXg">
+        <h2>Terabox API Response</h2>
+        
+        <!-- ইউজার পুরো URL ইনপুট করবে -->
+        <input type="text" id="full-url" placeholder="Enter Terabox URL here...">
+        
         <button onclick="fetchResponse()">Get Response</button>
 
         <div id="response-box" class="response-box">
@@ -67,16 +70,19 @@
 
     <script>
         function fetchResponse() {
-            let url = document.getElementById("api-url").value;
+            let userUrl = document.getElementById("full-url").value.trim();
             let responseBox = document.getElementById("response-box");
             let responseText = document.getElementById("api-response");
 
-            if (!url) {
-                alert("Please enter a valid API URL.");
+            if (!userUrl) {
+                alert("Please enter a valid Terabox URL.");
                 return;
             }
 
-            fetch(url)
+            // ফিক্সড API URL + ইউজারের দেওয়া লিংক
+            let apiUrl = "https://terabox-api-op.vercel.app/?url=" + encodeURIComponent(userUrl);
+
+            fetch(apiUrl)
                 .then(response => response.json())
                 .then(data => {
                     responseBox.style.display = "block";
