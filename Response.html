@@ -20,6 +20,18 @@
             margin: auto;
             position: relative;
             text-align: center;
+            border: 5px solid transparent;
+            animation: borderAnimation 3s infinite linear;
+        }
+
+        /* 🌈 লোডশেডিং কালার বর্ডার */
+        @keyframes borderAnimation {
+            0% { border-color: red; }
+            20% { border-color: orange; }
+            40% { border-color: yellow; }
+            60% { border-color: green; }
+            80% { border-color: blue; }
+            100% { border-color: purple; }
         }
 
         /* ❤️ হার্ট বর্ডার স্টাইল */
@@ -108,7 +120,7 @@
 <body>
 
     <div class="container">
-        <h2>Terabox Link Generate</h2>
+        <h2>Terabox API Response</h2>
         
         <input type="text" id="full-url" placeholder="Enter Terabox URL here...">
         
