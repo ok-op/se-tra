@@ -1,37 +1,26 @@
-document.addEventListener("DOMContentLoaded", () => {
-    let audio = document.getElementById("audio");
-    let progress = document.getElementById("progress");
-    let playPauseBtn = document.getElementById("playPause");
-    let stopBtn = document.getElementById("stop");
-    let isPlaying = false;
+let audio = document.getElementById("audio");
+let progress = document.getElementById("progress");
 
-    function playPause() {
-        if (isPlaying) {
-            audio.pause();
-            playPauseBtn.innerHTML = "▶️";
-            isPlaying = false;
-        } else {
-            audio.play();
-            playPauseBtn.innerHTML = "⏸️";
-            isPlaying = true;
-        }
-    }
-
-    function stopMusic() {
+function playPause() {
+    if (audio.paused) {
+        audio.play();
+    } else {
         audio.pause();
-        audio.currentTime = 0;
-        playPauseBtn.innerHTML = "▶️";
-        isPlaying = false;
     }
+}
 
-    audio.addEventListener("timeupdate", () => {
-        progress.value = (audio.currentTime / audio.duration) * 100;
-    });
+function stopMusic() {
+    audio.pause();
+    audio.currentTime = 0;
+    progress.value = 0;
+}
 
-    progress.addEventListener("input", () => {
-        audio.currentTime = (progress.value / 100) * audio.duration;
-    });
+// প্রোগ্রেস বার আপডেট করা
+audio.addEventListener("timeupdate", function () {
+    progress.value = (audio.currentTime / audio.duration) * 100;
+});
 
-    playPauseBtn.addEventListener("click", playPause);
-    stopBtn.addEventListener("click", stopMusic);
+// ম্যানুয়ালি সময় পরিবর্তন করা হলে
+progress.addEventListener("input", function () {
+    audio.currentTime = (progress.value / 100) * audio.duration;
 });
