@@ -50,6 +50,12 @@
             border-radius: 5px;
             display: none;
         }
+        .success-message {
+            color: green;
+            font-weight: bold;
+            display: none;
+            margin-top: 10px;
+        }
     </style>
 </head>
 <body>
@@ -57,14 +63,14 @@
     <div class="container">
         <h2>Terabox API Response</h2>
         
-        <!-- ইউজার পুরো URL ইনপুট করবে -->
         <input type="text" id="full-url" placeholder="Enter Terabox URL here...">
-        
         <button onclick="fetchResponse()">Get Response</button>
 
         <div id="response-box" class="response-box">
             <h3>Response:</h3>
             <pre id="api-response"></pre>
+            <button id="show-success" class="success-button" style="display: none;" onclick="showSuccess()">Click Here</button>
+            <p id="success-message" class="success-message">Successfully Fetched!</p>
         </div>
     </div>
 
@@ -73,13 +79,14 @@
             let userUrl = document.getElementById("full-url").value.trim();
             let responseBox = document.getElementById("response-box");
             let responseText = document.getElementById("api-response");
+            let showSuccessButton = document.getElementById("show-success");
+            let successMessage = document.getElementById("success-message");
 
             if (!userUrl) {
                 alert("Please enter a valid Terabox URL.");
                 return;
             }
 
-            // ফিক্সড API URL + ইউজারের দেওয়া লিংক
             let apiUrl = "https://terabox-api-op.vercel.app/?url=" + encodeURIComponent(userUrl);
 
             fetch(apiUrl)
@@ -87,11 +94,27 @@
                 .then(data => {
                     responseBox.style.display = "block";
                     responseText.textContent = JSON.stringify(data, null, 4);
+                    
+                    // যদি রেসপন্স আসে, তাহলে বাটন দেখাবে
+                    if (data) {
+                        showSuccessButton.style.display = "inline-block";
+                        successMessage.style.display = "none";
+                    } else {
+                        showSuccessButton.style.display = "none";
+                        successMessage.style.display = "none";
+                    }
                 })
                 .catch(error => {
                     responseBox.style.display = "block";
                     responseText.textContent = "Error fetching data: " + error;
+                    showSuccessButton.style.display = "none";
+                    successMessage.style.display = "none";
                 });
+        }
+
+        function showSuccess() {
+            let successMessage = document.getElementById("success-message");
+            successMessage.style.display = "block";
         }
     </script>
 
