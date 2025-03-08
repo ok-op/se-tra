@@ -35,21 +35,43 @@
             display: block;
             margin: auto;
         }
+        .button-container {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
         button {
-            background: #007bff;
+            background: linear-gradient(145deg, #007bff, #0056b3);
             color: white;
             border: none;
-            padding: 10px 15px;
+            padding: 12px 20px;
             font-size: 16px;
-            border-radius: 5px;
+            border-radius: 8px;
             cursor: pointer;
             margin: 5px;
-            box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.2);
-            transition: all 0.3s ease;
+            box-shadow: 0px 5px 15px rgba(0, 0, 255, 0.3);
+            transition: all 0.3s ease-in-out;
+            position: relative;
+            overflow: hidden;
+        }
+        button:before {
+            content: "";
+            position: absolute;
+            top: -10px;
+            left: -10px;
+            width: 150%;
+            height: 150%;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.3), rgba(0, 0, 0, 0));
+            opacity: 0;
+            transition: opacity 0.3s ease-in-out;
         }
         button:hover {
-            background: #0056b3;
-            box-shadow: 5px 5px 8px rgba(0, 0, 0, 0.3);
+            transform: translateY(-3px);
+            box-shadow: 0px 8px 20px rgba(0, 0, 255, 0.4);
+        }
+        button:hover:before {
+            opacity: 1;
         }
         .message-box {
             font-weight: bold;
@@ -76,8 +98,13 @@
         <h2>Terabox API Response</h2>
         
         <input type="text" id="full-url" placeholder="Enter Terabox URL here...">
-        <button onclick="fetchResponse()">Response</button>
-        <button onclick="refreshPage()">Refresh Page</button>
+        
+        <div class="button-container">
+            <button onclick="fetchResponse()">Response</button>
+            <button onclick="refreshPage()">Refresh</button>
+            <button onclick="openChannel()">Channel</button>
+            <button onclick="openGroup()">Group</button>
+        </div>
 
         <p id="message-box" class="message-box"></p>
     </div>
@@ -114,6 +141,14 @@
 
         function refreshPage() {
             location.reload(); // পেজ রিফ্রেশ করবে
+        }
+
+        function openChannel() {
+            window.open("https://t.me/Opleech_WD", "_blank");
+        }
+
+        function openGroup() {
+            window.open("https://t.me/+4b9lEhq8esY3ZGJl", "_blank");
         }
     </script>
 
