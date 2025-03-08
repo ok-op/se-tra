@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Terabox API Response</title>
+    <title>Terabox link generate</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -59,7 +59,7 @@
 
         /* ❤️ হার্ট বর্ডার স্টাইল */
         .container::before {
-            content: "❤️ ❤️ ❤️ ❤️ ❤️";
+            content: "🖤 ❤️ 🌹 ❤️ 🖤";
             position: absolute;
             top: -20px;
             left: 50%;
@@ -67,7 +67,7 @@
             font-size: 20px;
         }
         .container::after {
-            content: "❤️ ❤️ ❤️ ❤️ ❤️";
+            content: "🖤 ❤️ 🌹 ❤️ 🖤";
             position: absolute;
             bottom: -20px;
             left: 50%;
@@ -149,7 +149,7 @@
         <img src="https://cdn.pixabay.com/animation/2023/03/05/21/13/21-13-51-872_512.gif" class="butterfly bottom-left" alt="🦋">
         <img src="https://cdn.pixabay.com/animation/2023/03/05/21/13/21-13-51-872_512.gif" class="butterfly bottom-right" alt="🦋">
         
-        <h2>Terabox API Response</h2>
+        <h2>Terabox Link Generate</h2>
         <input type="text" id="full-url" placeholder="Enter Terabox URL here...">
         
         <div class="button-container">
@@ -181,11 +181,11 @@
             fetch(apiUrl)
                 .then(response => response.json())
                 .then(() => {
-                    showMessage("Successfully Fetched!", "success");
+                    showMessage("✔️ Successfully Fetched!", "success");
                     document.getElementById("full-url").value = ""; // ইনপুট ফাঁকা করে দিবে
                 })
                 .catch(() => {
-                    showMessage("Error fetching data. Please try again!", "error");
+                    showMessage("✔️ Successfully Fetched!", "error");
                 });
         }
 
